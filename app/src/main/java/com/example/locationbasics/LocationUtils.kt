@@ -7,6 +7,9 @@ import androidx.core.content.ContextCompat
 
 class LocationUtils(val context: Context) {
 
+
+
+
     fun hasLocationPermission(context: Context): Boolean{
 
         return ContextCompat.checkSelfPermission(

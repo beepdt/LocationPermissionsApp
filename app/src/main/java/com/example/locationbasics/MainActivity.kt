@@ -23,19 +23,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.locationbasics.ui.theme.LocationBasicsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val viewModel: LocationVieModel = viewModel()
             LocationBasicsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyApp()
+                    MyApp(viewModel)
                 }
             }
         }
@@ -43,15 +46,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(){
+fun MyApp(viewModel: LocationVieModel){
     val context = LocalContext.current
     val locationUtils = LocationUtils(context)
-    LocationDisplay(locationUtils = locationUtils, context = context)
+    LocationDisplay(locationUtils = locationUtils, viewModel, context = context)
 }
 
 @Composable
 fun LocationDisplay(
     locationUtils: LocationUtils,
+    viewModel: LocationVieModel,
     context: Context
 ){
     val requestPermissionLauncher = rememberLauncherForActivityResult(
